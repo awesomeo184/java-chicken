@@ -51,7 +51,17 @@ public class InputView {
 
     public static int inputAmount() {
         System.out.println("## 메뉴의 수량을 입력하세요.");
-        return Integer.parseInt(getInput());
+        try {
+            int amount =  Integer.parseInt(getInput());
+            if (amount < 1) {
+                throw new IllegalArgumentException("[ERROR] 최소 주문 수량은 1 입니다.");
+            }
+            return amount;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+            return inputAmount();
+        }
     }
 
     public static String getInput() {
