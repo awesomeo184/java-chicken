@@ -29,12 +29,14 @@ public class OutputView {
         printLine(TOP_LINE, size);
         printTableNumbers(tables);
         printBottomLine(tables);
+        System.out.println();
     }
 
     public static void printMenus(final List<Menu> menus) {
         for (final Menu menu : menus) {
             System.out.println(menu);
         }
+        System.out.println();
     }
 
     private static void printBottomLine(final List<Table> tables) {
@@ -74,6 +76,7 @@ public class OutputView {
                 + " " + amounts.get(i)
                 + " " + price);
         }
+        System.out.println();
     }
 
     public static void printTotalPrice(int totalPrice) {
