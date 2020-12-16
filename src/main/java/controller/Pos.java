@@ -52,21 +52,28 @@ public class Pos {
 
     private void pay() {
         OutputView.printTables(tables);
-        Table table = InputView.inputTable();
+        try {
+            Table table = InputView.inputTable();
+            if (!table.hasOrder()) {
+                throw new IllegalArgumentException("[ERROR] 주문이 없는 테이블입니다.");
+            }
+            int totalPrice = 0;
+            OutputView.printReceipt(table);
+            String payType = InputView.getPayType(table);
 
-        int totalPrice = 0;
-        OutputView.printReceipt(table);
-        String payType = InputView.getPayType(table);
+            if (payType.equals(CARD)) {
+                totalPrice = table.chargeWithCard();
+            }
+            if (payType.equals(CASH)) {
+                totalPrice = table.chargeWithCash();
+            }
 
-        if (payType.equals(CARD)) {
-            totalPrice = table.chargeWithCard();
+            OutputView.printTotalPrice(totalPrice);
+            table.clear();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println();
         }
-        if (payType.equals(CASH)) {
-            totalPrice = table.chargeWithCash();
-        }
-
-        OutputView.printTotalPrice(totalPrice);
-        table.clear();
     }
 
 
