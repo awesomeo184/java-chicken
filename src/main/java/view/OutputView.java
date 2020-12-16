@@ -1,14 +1,24 @@
 package view;
 
+import domain.MainMenu;
 import domain.Menu;
 import domain.Table;
 
 import java.util.List;
+import sun.rmi.rmic.Main;
 
 public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
     private static final String TABLE_FORMAT = "| %s |";
     private static final String BOTTOM_LINE = "└ ─ ┘";
+
+    public static void printMain() {
+        System.out.println("## 메인 화면");
+        for (MainMenu menu : MainMenu.values()) {
+            System.out.println(menu);
+        }
+        breakLine();
+    }
 
     public static void printTables(final List<Table> tables) {
         System.out.println("## 테이블 목록");
@@ -35,6 +45,10 @@ public class OutputView {
         for (final Table table : tables) {
             System.out.printf(TABLE_FORMAT, table);
         }
+        System.out.println();
+    }
+
+    private static void breakLine() {
         System.out.println();
     }
 }
