@@ -11,6 +11,7 @@ public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
     private static final String TABLE_FORMAT = "| %s |";
     private static final String BOTTOM_LINE = "└ ─ ┘";
+    private static final String BOTTOM_LINE_WITH_ORDER = "└ $ ┘";
 
     public static void printMain() {
         System.out.println("## 메인 화면");
@@ -25,13 +26,24 @@ public class OutputView {
         final int size = tables.size();
         printLine(TOP_LINE, size);
         printTableNumbers(tables);
-        printLine(BOTTOM_LINE, size);
+        printBottomLine(tables);
     }
 
     public static void printMenus(final List<Menu> menus) {
         for (final Menu menu : menus) {
             System.out.println(menu);
         }
+    }
+
+    private static void printBottomLine(final List<Table> tables) {
+        for (final Table table : tables) {
+            if (table.hasOrder()) {
+                System.out.print(BOTTOM_LINE_WITH_ORDER);
+                continue;
+            }
+            System.out.print(BOTTOM_LINE);
+        }
+        System.out.println();
     }
 
     private static void printLine(final String line, final int count) {

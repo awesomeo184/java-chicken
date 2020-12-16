@@ -21,6 +21,10 @@ public class Pos {
             if (mainMenu == MainMenu.EXIT) {
                 break;
             }
+
+            if (mainMenu == MainMenu.REGISTER_ORDER) {
+                registerOrder();
+            }
         }
     }
 

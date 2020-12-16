@@ -29,6 +29,10 @@ public class Table {
         }
     }
 
+    public boolean hasOrder() {
+        return orders.size() != 0;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(number);
