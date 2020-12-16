@@ -4,6 +4,7 @@ import domain.MainMenu;
 import domain.Menu;
 import domain.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 import sun.rmi.rmic.Main;
 
@@ -12,13 +13,14 @@ public class OutputView {
     private static final String TABLE_FORMAT = "| %s |";
     private static final String BOTTOM_LINE = "└ ─ ┘";
     private static final String BOTTOM_LINE_WITH_ORDER = "└ $ ┘";
+    private static final String RECEIPT_TITLE = "메뉴 수량 금액";
 
     public static void printMain() {
         System.out.println("## 메인 화면");
         for (MainMenu menu : MainMenu.values()) {
             System.out.println(menu);
         }
-        breakLine();
+        System.out.println();
     }
 
     public static void printTables(final List<Table> tables) {
@@ -60,7 +62,23 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void breakLine() {
+
+    public static void printReceipt(Table table) {
+        System.out.println("## 주문 내역");
+        System.out.println(RECEIPT_TITLE);
+        List<Menu> menus = table.orderedMenu();
+        List<Integer> amounts = table.orderedAmount();
+        for (int i = 0; i < menus.size(); i++) {
+            int price = amounts.get(i) * menus.get(i).getPrice();
+            System.out.println(menus.get(i).getName()
+                + " " + amounts.get(i)
+                + " " + price);
+        }
+    }
+
+    public static void printTotalPrice(int totalPrice) {
+        System.out.println("## 최종 결제할 금액");
+        System.out.println(totalPrice);
         System.out.println();
     }
 }

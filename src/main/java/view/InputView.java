@@ -26,7 +26,7 @@ public class InputView {
     }
 
     public static Table inputTable() {
-        System.out.println("## 주문할 테이블을 선택하세요.");
+        System.out.println("## 테이블을 선택하세요.");
         int tableNumber = Integer.parseInt(getInput());
         try {
             return TableRepository.getTable(tableNumber);
@@ -60,5 +60,21 @@ public class InputView {
 
     private static void breakLine() {
         System.out.println();
+    }
+
+    public static String getPayType(Table table) {
+        System.out.printf("## %s번 테이블의 결제를 진행합니다. \n", table.getNumber());
+        System.out.println("## 신용카드는 1번, 현금 결제는 2번");
+        try {
+            String payType = getInput();
+            if (payType.equals("1") || payType.equals("2")) {
+                return payType;
+            }
+            throw new IllegalArgumentException("올바르지 못한 선택입니다.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            breakLine();
+            return getPayType(table);
+        }
     }
 }
