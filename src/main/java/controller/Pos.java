@@ -42,7 +42,12 @@ public class Pos {
 
         Menu menu = InputView.inputMenu();
         int amount = InputView.inputAmount();
-        table.order(menu, amount);
+        try {
+            table.order(menu, amount);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+        }
     }
 
     private void pay() {
