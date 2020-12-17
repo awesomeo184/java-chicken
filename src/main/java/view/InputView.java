@@ -11,6 +11,8 @@ import utils.Validator;
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String CARD = "1";
+    private static final String CASH = "2";
 
     public static MainMenu inputMainMenu() {
         System.out.println("## 원하는 기능을 선택하세요.");
@@ -76,7 +78,7 @@ public class InputView {
         System.out.println("## 신용카드는 1번, 현금 결제는 2번");
         try {
             String payType = getInput();
-            if (payType.equals("1") || payType.equals("2")) {
+            if (payType.equals(CARD) || payType.equals(CASH)) {
                 System.out.println();
                 return payType;
             }

@@ -1,15 +1,17 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Table {
 
     private static final int MAX_AMOUNT = 99;
     private static final double CASH_DISCOUNT = 0.95;
+    private static final int UNIT_AMOUNT = 10;
+    private static final int UNIT_DISCOUNT = 10_000;
     private final int number;
     private final Map<Menu, Integer> orders = new HashMap<>();
 
@@ -45,12 +47,6 @@ public class Table {
         return new ArrayList<>(orders.values());
     }
 
-
-    @Override
-    public String toString() {
-        return Integer.toString(number);
-    }
-
     public int chargeWithCard() {
         return getPrice() - chickenDiscount();
     }
@@ -60,18 +56,16 @@ public class Table {
     }
 
     private int chickenDiscount() {
-        int chickenCount = 0;
-        List<Menu> menus = orderedMenu();
-        List<Integer> amounts = orderedAmount();
-        for (int i = 0; i < menus.size(); i++) {
-            if (menus.get(i).getCategory() == Category.CHICKEN) {
-                chickenCount += amounts.get(i);
-            }
-        }
+        int chickenCount = orders.entrySet().stream()
+            .filter(
+                menuAmountEntry -> menuAmountEntry.getKey().getCategory().equals(Category.CHICKEN))
+            .mapToInt(Entry::getValue)
+            .sum();
+
         if (chickenCount == 0) {
             return 0;
         }
-        return (chickenCount / 10) * 10_000;
+        return (chickenCount / UNIT_AMOUNT) * UNIT_DISCOUNT;
     }
 
     private int getPrice() {
@@ -87,4 +81,10 @@ public class Table {
     public void clear() {
         orders.clear();
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(number);
+    }
+
 }
